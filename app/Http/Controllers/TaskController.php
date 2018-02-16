@@ -299,7 +299,7 @@ class TaskController extends Controller
         $newtime = Carbon::now();
         $time = new Time;
         $time->start_time=$newtime;
-        $time->tasks_id = $data['id']->id;
+        $time->tasks_id = $data['id'];
         $time->save();
 
         //получение статуса приостановленой и текущей задачи

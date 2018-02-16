@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/taskslist', 'TaskController@TasksList')->name("list");
+Route::get('/', 'TaskController@TasksList')->name("list");
 
 Route::post('/edit', 'TaskController@TaskEdit');
 Route::post('/pause', 'TaskController@TaskPause');

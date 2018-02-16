@@ -31,7 +31,7 @@
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url('/taskslist') }}">Главная</a>
+            <a class="navbar-brand" href="{{ url('/') }}">Главная</a>
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">

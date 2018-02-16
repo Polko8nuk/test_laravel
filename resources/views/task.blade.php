@@ -3,7 +3,7 @@
 @section('task')
     <div id="home">
         <button>
-            <a href="/taskslist">Список задач</a>
+            <a href="/">Список задач</a>
         </button>
     </div>
     <div id="containertask">

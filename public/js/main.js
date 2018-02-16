@@ -83,7 +83,6 @@ $('document').ready(function () {
         //получение метки времени на предыдущую задачу
         var oldidtime = $('body').attr('data-idtime');
 
-
         /* в зависимости от типа кнопки, выполняют запросы  на сервер через Ajax
         * при нажатии на кнопку старт, текущая задача становиться активной
         * при следующем нажатии, получаю предыдущую активную задачу, для ее завершения или паузы */
@@ -122,7 +121,6 @@ $('document').ready(function () {
                         //получение временной метки предыдущей задачи для ее остановки
                          //oldidtime = $('.active ').closest('.test').find('.taskwork').data('idtime');
 
-
                         $.ajax({
                             type: "post",
                             url: "/change",
@@ -139,9 +137,11 @@ $('document').ready(function () {
                                 elem.closest('.test').find('.taskstatus p').html(data.statusnew);
                                 //запись метки времени на текущую задачу
                                 $('body').attr('data-idtime', data.id);
-                               //заменя статуса и времени для предыдущей задачи
-                                //  $( '.active').closest('.test').find('.taskstatus p').html(data.statusold);
-                                //  $( '.active').closest('.test').find('.taskstime p').html(data.seconds);
+                                //заменя статуса и времени для предыдущей задачи
+                                var status = data.statusold;
+                                active.find('.taskstatus p').html(status);
+                                var time = data.seconds;
+                                active.find('.tasktime p').html(time);
                             }
                         });
                         //получения указателя для предыдущую активную задачу
