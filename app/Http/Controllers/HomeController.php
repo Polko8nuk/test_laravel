@@ -11,15 +11,15 @@ use App\User;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 
 class HomeController extends Controller
 {
 
-    public $login = "login";
-
-    public $email = "email";
+    public $logincolumn = "login";
+    public $emailcolumn = "email";
 
     /**
      * Отображение страницы по адресу /home
@@ -37,17 +37,10 @@ class HomeController extends Controller
      */
     public function edit()
     {
-        /**
-         * Данные аутентифицированого пользователя
-         *
-         */
+        //Текущий пользователь
+        $user = Auth::user();
 
-        $name = Auth::user()->name;
-        $login = Auth::user()->login;
-        $email = Auth::user()->email;
-        $image = Auth::user()->image;
-
-        return view('edit')->with(['name'=>$name, 'login'=>$login, 'email'=>$email,'image'=>$image]);
+        return view('edit')->with(['name'=>$user->name, 'login'=>$user->login, 'email'=>$user->email,'image'=>$user->image]);
     }
 
     /**
@@ -60,17 +53,14 @@ class HomeController extends Controller
      */
     public function loginPost(ValidateData $request, HomeControllersHelpers $helpers)
     {
-        //id текущего пользователя
-        $id = Auth::user()->id;
-
-        //запись текущего пользователя
-        $user = User::find($id);
+        //Текущий пользователь
+        $user = Auth::user();
 
         //удаление пробелов и тегов
         $data = $helpers->validateData($request->all());
 
         //существует ли пользователь таким логином
-        $usernewlogin = $helpers->checkExistenceRecord($data['login'], $user->login, $this->login);
+        $usernewlogin = $helpers->checkExistenceRecord($data['login'], $user->login, $this->logincolumn);
 
         //если да, то возврат на предыдущую страницу с ошибкой
         if ($usernewlogin) {
@@ -82,7 +72,7 @@ class HomeController extends Controller
         $user->login = $data['login'];
 
         //существует ли пользователь таким email
-        $usernewemail = $helpers->checkExistenceRecord($data['email'], $user->email, $this->email);
+        $usernewemail = $helpers->checkExistenceRecord($data['email'], $user->email, $this->emailcolumn);
 
         //если да, то возврат на предыдущую страницу с ошибкой
         if ($usernewemail) {
@@ -94,7 +84,7 @@ class HomeController extends Controller
         $user->email = $data['email'];
 
         //проверка на подлинность пароля
-        $check = $helpers->checkPasswordAuth($data['password1'], $user->crypt);
+        $check = $helpers->checkPasswordAuth($data['password1'], $user->password);
 
         //если пароль не совпадает, то возврат на предыдущую страницу с ошибкой
         if (!$check) {
@@ -102,6 +92,7 @@ class HomeController extends Controller
             return redirect()->back();
         }
 
+        //Обновление данных пользователя
         $user->name = $data['name'];
         $user->save();
 
@@ -126,16 +117,16 @@ class HomeController extends Controller
         $data = $helpers->validateData($request->all());
 
         //проверка на подлинность пароля
-        $check = $helpers->checkPasswordAuth($data['passwordold'], $user->crypt);
+        $check = $helpers->checkPasswordAuth($data['passwordold'], $user->password);
 
         //если пароль не совпадает, то возврат на предыдущую страницу с ошибкой
         if (!$check) {
             Session::flash('passwordold' , 'Неправильный пароль');
+
             return redirect()->back();
         }
 
         $user->password = bcrypt($data['password']);
-        $user->crypt =  Crypt::encrypt($data['password']);
         $user->save();
 
         Session::flash('msgpassword' , 'Данные успешно обновлены');
@@ -153,8 +144,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
-        if($request->hasFile('photo'))
-        {
+        if($request->hasFile('photo')) {
             $file = $request->file('photo');
             $file->move(public_path() . '/image',$user->id . $file->getClientOriginalName());
         }
@@ -164,6 +154,4 @@ class HomeController extends Controller
 
         return redirect()->back();
     }
-
-
 }

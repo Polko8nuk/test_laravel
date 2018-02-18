@@ -1,21 +1,26 @@
 @extends("layouts.head")
 
-
 @section('task')
-    <div>
-        <form action="/reportpost" method="post">
-            {{csrf_field()}}
-            <div>
-                <p>Введите начальную дату</p>
-                <input type="date" name="start"><br>
-            </div>
-            <div>
-                <p>Введите конечную дату</p>
-                <input type="date" name="end"><br>
-            </div>
-            <input type="submit" value="Отправить">
-        </form>
+    <div id="home">
+        <button>
+            <a href="/">Список задач</a>
+        </button>
     </div>
+    <div class="container">
+        <div id="form-report">
+            <form action="/reportpost" method="post">
+                {{csrf_field()}}
+                <div>
+                    <p>Введите начальную дату</p>
+                    <input type="date" name="start"><br>
+                </div>
+                <div>
+                    <p>Введите конечную дату</p>
+                    <input type="date" name="end"><br>
+                </div>
+                <input type="submit" class="btn-primary btn" value="Отправить">
+            </form>
+        </div>
     <div id="containerreport">
         <div id="thead"  class="clearfix">
             <div class="th">
@@ -60,5 +65,5 @@
             <p>Количество затраченого времени:</p><span>{{$resultseconds}}</span>
         </div>
     </div>
-
+    </div>
 @endsection

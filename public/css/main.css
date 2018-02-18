@@ -4,8 +4,8 @@ p, h4, textarea {
 }
 
 #container {
-    width: 1510px;
-    height: 500px;
+    max-width: 100%;
+    margin-right: 100px ;
     margin-left: 100px;
     margin-top: 100px ;
 }
@@ -22,10 +22,8 @@ p, h4, textarea {
 }
 
 .status, .time, .work, .taskstatus, .tasktime, .taskwork, .taskedit {
-    width: 250px;
+    width: 260px;
 }
-
-
 
 .clearfix::after {
     content: "";
@@ -33,11 +31,11 @@ p, h4, textarea {
     clear: both;
 }
 
-.tasknumber p{
+.tasknumber p, .taskstatus p, .tasktime p{
     text-align: center;
 }
 
-.numberoforder h4{
+.numberoforder h4, .edit h4{
     text-align: center;
 
 }
@@ -60,8 +58,8 @@ a {
 
 #containertask {
     width: 800px;
-    height: 500px;
-    margin-left: 150px;
+    max-width: 100%;
+    margin: 0 auto;
     margin-top: 100px ;
 }
 
@@ -78,22 +76,22 @@ a {
 }
 
 #home {
-    margin-left: 520px;
+    margin-left: 900px;
     margin-top: 100px;
     margin-right: 900px;
 }
 
-#addtask  {
-    margin-left: 420px;
+.addtask  {
+    margin-left: 550px;
     margin-top: 20px;
     display: none;
 }
-#create {
+.create {
     margin-left: 705px;
     display: none;
 }
 
-#addtask button {
+.addtask button {
     margin-left: 313px;
     margin-top: 20px;
 }
@@ -108,7 +106,7 @@ a {
 }
 
 #annulment button {
-    margin-left: 640px;
+    margin-left: 770px;
     display: none;
 }
 
@@ -118,17 +116,23 @@ a {
 }
 
 #form-register, #form-auth {
-    width: 200px;
-    height: 410px;
+    width: 220px;
     z-index: 100;
     position: absolute;
-    top: 300px;
     left: 0;
     right: 0;
     margin: auto;
     padding: 20px 20px 20px 20px;
     display: none;
-    background-color: yellow;
+    background-color: #bee5eb;
+}
+
+#form-auth {
+    top: 350px;
+}
+
+#form-register {
+    top: 150px;
 }
 
 #blackout {
@@ -142,14 +146,12 @@ a {
     bottom: 0;
 }
 
-#form-auth button {
+#form-auth .button {
     margin-left: 50px;
-    margin-top: 50px;
 }
 
-#form-register button {
-    margin-left: 25px;
-    margin-top: 5px;
+#form-register .button {
+    margin-left: 30px;
 }
 
 .imageavatar {
@@ -171,3 +173,35 @@ a {
     margin-left: 250px;
 }
 
+.panel-heading p {
+    text-align: center;
+}
+
+.taskedit {
+    margin-left: 100px;
+}
+
+.edit {
+    padding-left: 50px;
+}
+
+.work, .taskwork {
+    margin-left: 50px;
+}
+
+#form-report form {
+    margin-left: 470px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+
+}
+
+#form-report form > input {
+    margin-left: 30px;
+    margin-top: 20px
+
+}
+
+.container .row {
+    margin-top: 50px;
+}

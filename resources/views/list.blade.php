@@ -2,82 +2,33 @@
 
 
 @section('task')
-    @if (!Auth::guest())
-        <div id="auth">
-            <a href="/home">{{Auth::user()->login}}</a>
-            <a href="/logout">Выйти</a>
+
+    <div class="container">
+        <div class="row">
+            @if (!Auth::guest())
+                 <div class="col-sm registerajax">
+                      <a href="/home" class="btn btn-primary">Добро пожаловать, {{Auth::user()->login}}</a>
+                 </div>
+                 <div class="col-sm entryajax">
+                      <a href="/logout" class="btn btn-primary">Выйти</a>
+                 </div>
+            @else
+                <div class="col-sm register">
+                    <button class="btn btn-primary">Регистрация</button>
+                </div>
+                <div class="col-sm entry">
+                    <button class="btn btn-primary">Вход</button>
+                </div>
+            @endif
+            <div class="col-sm addtaskhref">
+                <button class="btn btn-primary">Добавить задачу</button>
+            </div>
+            <div class="col-sm viewreport">
+                <a href="/report" class="btn btn-primary">Отчет</a>
+            </div>
         </div>
-        @else
-        <div id="add">
-            <button id="register">Регистрация</button>
-            <button id="entry">Вход</button>
-
-        </div>
-    @endif
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    <div id="form-register">
-        <form>
-            {{csrf_field()}}
-            <p>Регистрация</p>
-            <div id="name">
-                <label>Имя</label>
-                <input type="text" placeholder="Введите логин" name="name" value="{{old('name')}}">
-            </div>
-
-            <div id="login">
-                <label>Логин</label>
-                <input type="text" placeholder="Введите логин" name="login" value="{{old('login')}}">
-            </div>
-
-            <div id="email">
-                <label>Введите email</label>
-                <input type="email" placeholder="Введите email" name="email" value="{{old('email')}}">
-            </div>
-
-            <div id="password">
-                <label>Пароль</label>
-                <input type="password" placeholder="Введите пароль" name="password" >
-            </div>
-            <div id="confirm">
-                <label>Подтвердите пароль</label>
-                <input type="password" placeholder="Повторите пароль" name="password_confirmation">
-            </div>
-
-            <button>Регистрация</button>
-        </form>
     </div>
-    <div id="form-auth">
-        <form>
-            {{csrf_field()}}
-            <p>Авторизация</p>
-            <div>
-                <label>Логин</label>
-                <input type="text" placeholder="Введите логин" name="login">
-            </div>
-            <div>
-                <label>Пароль</label>
-                <input type="password" placeholder="Введите пароль" name="password">
-            </div>
-            <button>Вход</button>
-        </form>
-    </div>
-    <div id="blackout">
-    </div>
-    <div id="viewreport">
-        <a href="/report" class="btn btn-primary">Отчет</a>
-    </div>
-    <div id="addtaskhref">
-        <button class="addtask">Добавить задачу</button>
-    </div>
-    <div id="addtask">
+    <div class="addtask">
         <form  action="/add" method="post">
             {{csrf_field()}}
             <textarea class="title" cols="45" rows="10" name="title" placeholder="Введите наименование новой задачи"></textarea>
@@ -153,9 +104,9 @@
                     @switch($value->status_id)
                         @case(1)
                             <div class="taskwork" data-id="{{$value->id}}">
-                                <button class="button" data-type="start"> Старт </button>
-                                <button class="button" data-type="pause" disabled> Пауза </button>
-                                <button class="button" data-type="complete" disabled> Завершить </button>
+                                <button class="button btn btn-primary" data-type="start"> Старт </button>
+                                <button class="button btn btn-primary" data-type="pause" disabled> Пауза </button>
+                                <button class="button btn btn-primary" data-type="complete" disabled> Завершить </button>
                             </div>
                             @break
                         @case(2)
@@ -164,23 +115,23 @@
                             @else
                                 <div class="taskwork active" data-idtime="{{$activeresult}}" data-id="{{$value->id}}">
                             @endif
-                                <button class="button" data-type="start" disabled> Старт </button>
-                                <button class="button" data-type="pause" > Пауза </button>
-                                <button class="button" data-type="complete" > Завершить </button>
+                                <button class="button btn btn-primary" data-type="start" disabled> Старт </button>
+                                <button class="button btn btn-primary" data-type="pause" > Пауза </button>
+                                <button class="button btn btn-primary" data-type="complete" > Завершить </button>
                             </div>
                             @break
                         @case(3)
                         <div class="taskwork" data-id="{{$value->id}}">
-                            <button class="button" data-type="start" > Старт </button>
-                            <button class="button" data-type="pause" disabled> Пауза </button>
-                            <button class="button" data-type="complete" disabled> Завершить </button>
+                            <button class="button btn btn-primary" data-type="start" > Старт </button>
+                            <button class="button btn btn-primary" data-type="pause" disabled> Пауза </button>
+                            <button class="button btn btn-primary" data-type="complete" disabled> Завершить </button>
                         </div>
                         @break
                         @case(4)
                         <div class="taskwork" data-id="{{$value->id}}">
-                            <button class="button" data-type="start" disabled> Старт </button>
-                            <button class="button" data-type="pause" disabled> Пауза </button>
-                            <button class="button" data-type="complete" disabled> Завершить </button>
+                            <button class="button btn btn-primary" data-type="start" disabled> Старт </button>
+                            <button class="button btn btn-primary" data-type="pause" disabled> Пауза </button>
+                            <button class="button btn btn-primary" data-type="complete" disabled> Завершить </button>
                         </div>
                         @break
                     @endswitch
@@ -195,4 +146,62 @@
             <hr>
         @endforeach
     </div>
+            <div id="form-register">
+                <form>
+                    {{csrf_field()}}
+                    <div class="panel-heading">
+                        <p>Регистрация</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="formGroupExampleInput">Имя</label>
+                        <input type="text" class="form-control"  placeholder="Введите имя" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label class="formGroupExampleInput2">Логин</label>
+                        <input type="text" class="form-control"  placeholder="Введите логин" name="login" >
+                    </div>
+                    <div class="form-group">
+                        <label class="formGroupExampleInput2">Email</label>
+                        <input type="email" class="form-control"  placeholder="Введите email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="formGroupExampleInput2">Пароль</label>
+                        <input type="password" class="form-control"  placeholder="Введите пароль" name="password">
+                        <small id="passwordHelpInline" class="text-muted">
+                            Должно быть больше 6 символов.
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label class="formGroupExampleInput2">Подтвердите пароль</label>
+                        <input type="password" class="form-control" placeholder="Повторите пароль" name="password_confirmation">
+                        <small id="passwordHelpInline" class="text-muted">
+                            Пароли должны совпадать
+                        </small>
+                    </div>
+                    <div class="button">
+                        <button type="submit" class="btn btn-primary">Регистрация</button>
+                    </div>
+                </form>
+            </div>
+            <div id="form-auth">
+                <form >
+                    {{csrf_field()}}
+                    <div class="panel-heading">
+                        <p>Вход</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="formGroupExampleInput2">Логин</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Введите логин" name="login">
+                    </div>
+                    <div class="form-group">
+                        <label class="formGroupExampleInput2">Пароль</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Введите пароль" name="password">
+                    </div>
+                    <div class="button">
+                        <button type="submit" class="btn btn-primary">Вход</button>
+                    </div>
+                </form>
+            </div>
+            <div id="blackout">
+            </div>
 @endsection

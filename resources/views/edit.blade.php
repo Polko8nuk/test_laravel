@@ -14,8 +14,7 @@
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <div class="form-avatar">
-                                <img src="../../image/{{$image}}" alt="..." class="img-circle imageavatar">
-                                <span>Аватарка</span>
+                                    <img src="../../image/{{$image}}" alt="..." class="img-circle imageavatar">
                                 </div>
                                 <div class="col-md-6">
                                     <input type="file" class="form-control avatar" name="photo">
@@ -139,6 +138,11 @@
                                         <span class="help-block">
                                                     <strong>{{ $errors->first('passwordold') }}</strong>
                                                 </span>
+                                    @endif
+                                    @if (session('passwordold'))
+                                        <span class="help-block">
+                                        <strong>{{session('passwordold')}}</strong>
+                                    </span>
                                     @endif
                                 </div>
                             </div>

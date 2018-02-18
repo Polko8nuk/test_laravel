@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Helpers\Contracts\HomeHelpers;
 use App\User;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 
@@ -19,13 +20,10 @@ class HomeControllersHelpers //implements HomeHelpers
      */
     public static function checkPasswordAuth($request,$password)
     {
-        $decrypted_secret = Crypt::decrypt($password);
-
-        if (! ($decrypted_secret == $request) ) {
-            return false;
-        }
-        return true;
-
+        if (Hash::check($request, $password))
+        {
+            return true;
+        } else return false;
     }
 
     /**
@@ -55,7 +53,7 @@ class HomeControllersHelpers //implements HomeHelpers
      */
     public static function checkExistenceRecord($request, $user, $columb)
     {
-        if (($request == $user)) {
+        if (!($request == $user)) {
             $usernew = User::where($columb, $request)->first();
             if ($usernew) {
                return true;

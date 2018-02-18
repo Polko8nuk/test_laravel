@@ -42,22 +42,19 @@ $('document').ready(function () {
            }
         });
 
-
-
     });
 
     //При нажатии на кнопку Добавить задачу, textarea становяться активными и появляется кнопка Отменить
-    $( ' #addtaskhref .addtask ' ).click(function () {
-        $('#addtask').css("display", "block");
-        $('#create').css("display", "block");
-        $('#annulment button').css("display", "block");
+    $( ' .addtaskhref button ' ).click(function () {
+        $('.addtask').css("display", "block");
+        $(' #annulment button').css("display", "block");
             
     });
 
     //При нажатии на кнопку Отмена, textarea и сама кнопка скрываются
     $('#annulment button').click(function () {
-        $('#addtask').css("display", "none");
-        $('#create').css("display", "none");
+        $('.addtask').css("display", "none");
+        $('.create').css("display", "none");
         $(this).css("display", "none");
     });
 

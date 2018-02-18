@@ -22,7 +22,7 @@ class TaskController extends Controller
      *
      *
      * @return @return \Illuminate\Http\Response
-     */
+    */
     public function TasksList()
     {
         $data = [];
@@ -45,12 +45,13 @@ class TaskController extends Controller
 
         $data['result'] = $result;
 
-        //получение задачи, которая акттивная
+        //получение задачи, которая активная
         $active = Task::with(['times' => function($e) {
             $e->where('end_time', null);
         }])->where('status_id',2)->first();
 
         $activeresult = 0;
+
         //получение id задачи, которая выполняется
         if ($active) {
             foreach ($active->times as $value) {
@@ -90,7 +91,7 @@ class TaskController extends Controller
         //удаление тегов и пробелов
         $data = $helpers->validateData($request->all());
 
-        //получение обекта текущей задачи и обновление данных
+        //получение обьекта текущей задачи и обновление данных
         $task = Task::find($data['id']);
         $task->title = $data['title'];
         $task->description = $data['description'];
@@ -116,9 +117,6 @@ class TaskController extends Controller
 
     public function TaskRemove($id, HomeControllersHelpers $helpers)
     {
-        //удаление тегов и пробелов
-        $id = trim(strip_tags($id));
-
         //удаление задачи
         $task = Task::where('id', $id)->delete();
 
@@ -224,9 +222,6 @@ class TaskController extends Controller
         //получение общее количество затрачего времени на выполнение задачи
         $resultseconds = $taskHelpers->amount($seconds);
 
-        //преобразование в формат
-        $resultseconds = date( 'G часов i  минут s секунд', $resultseconds);
-
         //если запрос пришел от кнопки пауза
         $status = "";
         if (in_array('pause', $data))
@@ -297,6 +292,8 @@ class TaskController extends Controller
 
         //запись новой метки
         $newtime = Carbon::now();
+
+        //запись в БД новой временной метки
         $time = new Time;
         $time->start_time=$newtime;
         $time->tasks_id = $data['id'];
@@ -311,9 +308,6 @@ class TaskController extends Controller
 
         //получение общее количество затрачего времени на выполнение задачи
         $resultseconds = $taskHelpers->amount($seconds);
-
-        //преобразование в формат
-        $resultseconds = date( 'G часов i  минут s секунд', $resultseconds);
 
         //получение временной метки для новой задачи
         $timesid = Time::where('start_time',$newtime)->first();
@@ -331,37 +325,22 @@ class TaskController extends Controller
      * Отображении страницы отчета
      *
      */
-    public function TaskReport(Request $request)
+    public function TaskReport(Request $request, TaskHelpers $taskHelpers)
     {
         //получение всех задач
         $list = DB::table('tasks')
             ->join('times_new', 'tasks.id', '=', 'times_new.tasks_id')->get();
 
-        $data = [];
-        $result = 0;
-
         //запись в массив данных о задачах. подсчитывается общая сумма
-        foreach ($list as $time) {
-            if (array_key_exists($time->tasks_id, $data))
-            {
-                $data[$time->tasks_id]['minutes'] += $time->minutes;
-            } else {
-                $data[$time->tasks_id]['title'] = $time->title;
-                $data[$time->tasks_id]['minutes'] = $time->minutes;
-            }
-            $result += $time->minutes;
-        }
+        list($listarray, $time) = $taskHelpers->listReport($list);
 
-        //преобразование метки Unix в формат
-        $result = date( 'G часов i  минут s секунд', $result);
-
-        return view('report')->with(['list'=> $data , 'resultseconds' => $result]);
+        return view('report')->with(['list'=> $listarray , 'resultseconds' => $time]);
     }
 
     /**
      * Post для получения задач в определенном периоде
      */
-    public function TaskReportPost(Request $request, HomeControllersHelpers $helpers)
+    public function TaskReportPost(Request $request, HomeControllersHelpers $helpers, TaskHelpers $taskHelpers)
     {
         //удаление тегов и пробелов
         $data = $helpers->validateData($request->all());
@@ -369,7 +348,6 @@ class TaskController extends Controller
         //запись даты, которая пришла с формы
         $this->start = $data['start'];
         $this->end = $data['end'];
-
 
         $list = DB::table('tasks')
             ->join('times_new', function ($join) {
@@ -381,25 +359,10 @@ class TaskController extends Controller
             })
             ->get();
 
-        $data = [];
-        $result = 0;
+        //запись в массив данных о задачах. подсчитывается общая сумма времени
+        list($listarray, $time) = $taskHelpers->listReport($list);
 
-        //запись в массив данных о задачах. подсчитывается общая сумма
-        foreach ($list as $time) {
-            if (array_key_exists($time->tasks_id, $data))
-            {
-                $data[$time->tasks_id]['minutes'] += $time->minutes;
-            } else {
-                $data[$time->tasks_id]['title'] = $time->title;
-                $data[$time->tasks_id]['minutes'] = $time->minutes;
-            }
-            $result += $time->minutes;
-        }
-
-        //преобразование метки Unix в формат
-        $result = date( 'G часов i  минут s секунд', $result);
-
-        return view('report')->with(['list'=> $data , 'resultseconds' => $result]);
+        return view('report')->with(['list'=> $listarray , 'resultseconds' => $time]);
     }
 
 }
