@@ -1,6 +1,5 @@
 @extends("layouts.head")
 
-
 @section('task')
 
     <div class="container">
@@ -146,62 +145,59 @@
             <hr>
         @endforeach
     </div>
-            <div id="form-register">
-                <form>
-                    {{csrf_field()}}
-                    <div class="panel-heading">
-                        <p>Регистрация</p>
-                    </div>
-                    <div class="form-group">
-                        <label class="formGroupExampleInput">Имя</label>
-                        <input type="text" class="form-control"  placeholder="Введите имя" name="name">
-                    </div>
-                    <div class="form-group">
-                        <label class="formGroupExampleInput2">Логин</label>
-                        <input type="text" class="form-control"  placeholder="Введите логин" name="login" >
-                    </div>
-                    <div class="form-group">
-                        <label class="formGroupExampleInput2">Email</label>
-                        <input type="email" class="form-control"  placeholder="Введите email" name="email">
-                    </div>
-                    <div class="form-group">
-                        <label class="formGroupExampleInput2">Пароль</label>
-                        <input type="password" class="form-control"  placeholder="Введите пароль" name="password">
-                        <small id="passwordHelpInline" class="text-muted">
-                            Должно быть больше 6 символов.
-                        </small>
-                    </div>
-                    <div class="form-group">
-                        <label class="formGroupExampleInput2">Подтвердите пароль</label>
-                        <input type="password" class="form-control" placeholder="Повторите пароль" name="password_confirmation">
-                        <small id="passwordHelpInline" class="text-muted">
-                            Пароли должны совпадать
-                        </small>
-                    </div>
-                    <div class="button">
-                        <button type="submit" class="btn btn-primary">Регистрация</button>
-                    </div>
-                </form>
+    <div id="form-register">
+        <form>
+            {{csrf_field()}}
+            <div class="panel-heading">
+                <p>Регистрация</p>
             </div>
-            <div id="form-auth">
-                <form >
-                    {{csrf_field()}}
-                    <div class="panel-heading">
-                        <p>Вход</p>
-                    </div>
-                    <div class="form-group">
-                        <label class="formGroupExampleInput2">Логин</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Введите логин" name="login">
-                    </div>
-                    <div class="form-group">
-                        <label class="formGroupExampleInput2">Пароль</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Введите пароль" name="password">
-                    </div>
-                    <div class="button">
-                        <button type="submit" class="btn btn-primary">Вход</button>
-                    </div>
-                </form>
+            <div class="form-group">
+                <label class="formGroupExampleName">Имя</label>
+                <input type="text" class="form-control"  placeholder="Введите имя" name="name">
             </div>
-            <div id="blackout">
+            <div class="form-group">
+                <label class="formGroupExampleLogin">Логин</label>
+                <input type="text" class="form-control"  placeholder="Введите логин" name="login" >
             </div>
+            <div class="form-group">
+                <label class="formGroupExampleEmail">Email</label>
+                <input type="email" class="form-control"  placeholder="Введите email" name="email">
+            </div>
+            <div class="form-group">
+                <label class="formGroupExamplePassword">Пароль</label>
+                <input type="password" class="form-control"  placeholder="Введите пароль" name="password">
+                <small id="passwordHelpInline" class="text-muted">
+                    Должно быть больше 6 символов.
+                </small>
+            </div>
+            <div class="form-group">
+                <label class="formGroupExamplePasswordConfirm">Подтвердите пароль</label>
+                <input type="password" class="form-control" placeholder="Повторите пароль" name="password_confirmation">
+            </div>
+            <div class="button">
+                <button type="submit" class="btn btn-primary">Регистрация</button>
+            </div>
+        </form>
+    </div>
+    <div id="form-auth">
+         <form >
+             {{csrf_field()}}
+             <div class="panel-heading">
+                 <p>Вход</p>
+             </div>
+             <div class="form-group">
+                 <label class="formGroupExampleLogin">Логин</label>
+                 <input type="text" class="form-control" placeholder="Введите логин" name="login">
+             </div>
+             <div class="form-group">
+                 <label class="formGroupExamplePassword">Пароль</label>
+                 <input type="text" class="form-control" placeholder="Введите пароль" name="password">
+             </div>
+             <div class="button">
+                 <button type="submit" class="btn btn-primary">Вход</button>
+             </div>
+         </form>
+    </div>
+    <div id="blackout">
+    </div>
 @endsection

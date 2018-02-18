@@ -100,10 +100,22 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'login' => [
+            'required' => 'Поле :attribute отсутствует',
         ],
+        'name' => [
+            'required' => 'Поле :attribute отсутствует',
+        ],
+
+        'email' => [
+            'required' => 'Поле :attribute отсутствует',
+        ],
+        'password' => [
+            'required' => 'Поле :attribute отсутствует',
+        ],
+
     ],
+
 
     /*
     |--------------------------------------------------------------------------
